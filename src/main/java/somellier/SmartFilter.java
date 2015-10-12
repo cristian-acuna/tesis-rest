@@ -1,21 +1,15 @@
-package hello;
+package somellier;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import org.apache.catalina.ssi.ByteArrayServletOutputStream;
+import org.springframework.stereotype.Component;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-
-import org.apache.catalina.ssi.ByteArrayServletOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 //@Component
 public class SmartFilter implements Filter {
