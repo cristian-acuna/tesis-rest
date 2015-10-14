@@ -17,10 +17,11 @@ import javax.validation.constraints.NotNull;
         private String nombre;
 
         @NotNull
+        @Column(length=1000)
         private String descripcion;
 
         @NotNull
-        private String anio;
+        private String cosecha;
 
         @NotNull
         private float graduacion;
@@ -34,6 +35,10 @@ import javax.validation.constraints.NotNull;
         private Uva uva;
 
         @ManyToOne(cascade = {CascadeType.ALL})
+        @JoinColumn(name="cod_tipo")
+        private TipoVino tipoVino;
+
+        @ManyToOne(cascade = {CascadeType.ALL})
         @JoinColumn(name="cod_edad")
         private Edad edad;
 
@@ -44,13 +49,14 @@ import javax.validation.constraints.NotNull;
             this.id = id;
         }
 
-        public Vino(String nombre, String descripcion, String anio, float graduacion, Bodega bodega, Uva uva, Edad edad) {
+        public Vino(String nombre, String descripcion, String cosecha, float graduacion, Bodega bodega, Uva uva, TipoVino tipoVino, Edad edad) {
             this.nombre = nombre;
             this.descripcion = descripcion;
-            this.anio = anio;
+            this.cosecha = cosecha;
             this.graduacion = graduacion;
             this.bodega = bodega;
             this.uva = uva;
+            this.tipoVino = tipoVino;
             this.edad = edad;
         }
 
@@ -78,12 +84,12 @@ import javax.validation.constraints.NotNull;
             this.descripcion = descripcion;
         }
 
-        public String getAnio() {
-            return anio;
+        public String getCosecha() {
+            return cosecha;
         }
 
-        public void setAnio(String anio) {
-            this.anio = anio;
+        public void setCosecha(String cosecha) {
+            this.cosecha = cosecha;
         }
 
         public Bodega getBodega() {
@@ -116,5 +122,13 @@ import javax.validation.constraints.NotNull;
 
         public void setGraduacion(float graduacion) {
             this.graduacion = graduacion;
+        }
+
+        public TipoVino getTipoVino() {
+            return tipoVino;
+        }
+
+        public void setTipoVino(TipoVino tipoVino) {
+            this.tipoVino = tipoVino;
         }
     }

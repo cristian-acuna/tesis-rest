@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
         private String nombre;
 
         @NotNull
+        @Column(length=1000)
         private String descripcion;
 
         @NotNull

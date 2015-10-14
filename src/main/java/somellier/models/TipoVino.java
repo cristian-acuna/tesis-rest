@@ -15,6 +15,7 @@ public class TipoVino {
     private String nombre;
 
     @NotNull
+    @Column(length=1000)
     private String descripcion;
 
     public TipoVino() {

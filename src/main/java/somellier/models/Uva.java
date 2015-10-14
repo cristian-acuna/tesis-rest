@@ -15,11 +15,8 @@ public class Uva {
     private String nombre;
 
     @NotNull
+    @Column(length=1000)
     private String descripcion;
-
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="cod_tipo")
-    private TipoVino tipoVino;
 
     public Uva() {
     }
@@ -28,10 +25,9 @@ public class Uva {
         this.id = id;
     }
 
-    public Uva(String nombre, String descripcion, TipoVino tipoVino) {
+    public Uva(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.tipoVino = tipoVino;
     }
 
     public int getId() {
@@ -56,13 +52,5 @@ public class Uva {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public TipoVino getTipoVino() {
-        return tipoVino;
-    }
-
-    public void setTipoVino(TipoVino tipoVino) {
-        this.tipoVino = tipoVino;
     }
 }

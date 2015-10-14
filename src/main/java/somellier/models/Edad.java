@@ -15,6 +15,7 @@ public class Edad {
     private String nombre;
 
     @NotNull
+    @Column(length=1000)
     private String descripcion;
 
     public Edad() {
