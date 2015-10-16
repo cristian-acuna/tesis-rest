@@ -26,19 +26,19 @@ import javax.validation.constraints.NotNull;
         @NotNull
         private float graduacion;
 
-        @ManyToOne(cascade = {CascadeType.ALL})
+        @ManyToOne(cascade = {CascadeType.MERGE})
         @JoinColumn(name="cod_bodega")
         private Bodega bodega;
 
-        @ManyToOne(cascade = {CascadeType.ALL})
+        @ManyToOne(cascade = {CascadeType.MERGE})
         @JoinColumn(name="cod_uva")
         private Uva uva;
 
-        @ManyToOne(cascade = {CascadeType.ALL})
+        @ManyToOne(cascade = {CascadeType.MERGE})
         @JoinColumn(name="cod_tipo")
         private TipoVino tipoVino;
 
-        @ManyToOne(cascade = {CascadeType.ALL})
+        @ManyToOne(cascade = {CascadeType.MERGE})
         @JoinColumn(name="cod_edad")
         private Edad edad;
 
