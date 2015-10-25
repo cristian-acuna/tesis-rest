@@ -30,14 +30,14 @@ public class ResidenciaDao {
         return entityManager.createQuery("from Residencia").getResultList();
     }
 
-    public Residencia getByEmail(String email) {
+    public Residencia getByCiudad(String ciudad) {
         return (Residencia) entityManager.createQuery(
-                "from Residencia where email = :email")
-                .setParameter("email", email)
+                "from Residencia where ciudad = :ciudad")
+                .setParameter("ciudad", ciudad)
                 .getSingleResult();
     }
 
-    public Residencia getById(long id) {
+    public Residencia getById(int id) {
         return entityManager.find(Residencia.class, id);
     }
 

@@ -18,6 +18,15 @@ public class VinoController {
     private EdadDao edadDao;
 
     @Autowired
+    private RateDao rateDao;
+
+    @Autowired
+    private ComentarioDao comentarioDao;
+
+    @Autowired
+    private PrecioDao precioDao;
+
+    @Autowired
     private UvaDao uvaDao;
 
     @Autowired
@@ -28,6 +37,7 @@ public class VinoController {
     List<Vino> listar()
     {
         List<Vino> vinos = vinoDao.getAll();
+        System.out.println(vinos.toString());
 
         return vinos;
     }
@@ -48,6 +58,57 @@ public class VinoController {
 
         return true;
     }
+
+    @RequestMapping(value = "/rate", method = RequestMethod.POST)
+         public @ResponseBody
+         boolean rate(@RequestBody Rate rate)
+    {
+        System.out.println("RATEEEEEEEDDDDDDD!!!!!:");
+        try {
+            rateDao.create(rate);
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+            return false;
+        }
+
+        return true;
+    }
+
+    @RequestMapping(value = "/comentar", method = RequestMethod.POST)
+    public @ResponseBody
+    boolean comentar(@RequestBody Comentario comentario)
+    {
+        System.out.println("COMENTADOOOOOOOOOOOO!!!!!:");
+
+        try {
+            comentarioDao.create(comentario);
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+            return false;
+        }
+
+        return true;
+    }
+
+    @RequestMapping(value = "/valorar", method = RequestMethod.POST)
+    public @ResponseBody
+    boolean valorar(@RequestBody Precio precio)
+    {
+        System.out.println("VALORADOOOOOOOOOOOOOO!!!!!:");
+
+        try {
+            precioDao.create(precio);
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+            return false;
+        }
+
+        return true;
+    }
+
 
     @RequestMapping(value = "/edades", method = RequestMethod.GET)
     public @ResponseBody

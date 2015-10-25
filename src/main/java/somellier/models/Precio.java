@@ -2,47 +2,40 @@ package somellier.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
-@Table(name = "puntaje")
-public class Puntaje {
+@Table(name = "precio")
+public class Precio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @NotNull
-    private int puntaje;
-
-    @NotNull
-    private String fecha;
+    private Date fecha;
 
     @NotNull
     private float precio;
 
-    @NotNull
-    private String comentario;
-
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="cod_usuario")
     private Usuario usuario;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="cod_vino")
     private Vino vino;
 
-    public Puntaje() {
+    public Precio() {
     }
 
-    public Puntaje(int id) {
+    public Precio(int id) {
         this.id = id;
     }
 
-    public Puntaje(int puntaje, String fecha, float precio, String comentario, Usuario usuario, Vino vino) {
-        this.puntaje = puntaje;
+    public Precio(Date fecha, float precio, Usuario usuario, Vino vino) {
         this.fecha = fecha;
         this.precio = precio;
-        this.comentario = comentario;
         this.usuario = usuario;
         this.vino = vino;
     }
@@ -55,36 +48,20 @@ public class Puntaje {
         this.id = id;
     }
 
-    public int getPuntaje() {
-        return puntaje;
-    }
-
-    public void setPuntaje(int puntaje) {
-        this.puntaje = puntaje;
-    }
-
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public float getPrecio() {
+    public float getComentario() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setComentario(float precio) {
         this.precio = precio;
-    }
-
-    public String getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
     }
 
     public Usuario getUsuario() {
