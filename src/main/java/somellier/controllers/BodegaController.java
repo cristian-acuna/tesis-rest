@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import somellier.models.Bodega;
 import somellier.models.BodegaDao;
+import somellier.models.Provincia;
 import somellier.models.Residencia;
 
 import java.util.List;
@@ -40,7 +41,8 @@ public class BodegaController {
             @RequestParam(value="provincia") String provincia,
             @RequestParam(value="pais") String pais)
     {
-        Residencia residencia = new Residencia(ciudad,Integer.parseInt(provincia),pais);
+        Provincia prov = new Provincia(Integer.parseInt(provincia));
+        Residencia residencia = new Residencia(ciudad,prov,pais);
         Bodega bodega = new Bodega(nombre, descripcion, Integer.parseInt(anio), link, residencia);
         System.out.println("REGISTROOOOO:"+bodega.toString());
         try {

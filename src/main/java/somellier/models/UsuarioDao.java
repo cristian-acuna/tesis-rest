@@ -6,53 +6,51 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
 public class UsuarioDao {
 
+    @Autowired
+    private SessionFactory _sessionFactory;
+
+    private Session getSession() {
+        return _sessionFactory.getCurrentSession();
+    }
+
     public void create(Usuario usuario) {
-        entityManager.persist(usuario);
+        getSession().saveOrUpdate(usuario);
         return;
     }
 
     public void delete(Usuario usuario) {
-        if (entityManager.contains(usuario))
-            entityManager.remove(usuario);
-        else
-            entityManager.remove(entityManager.merge(usuario));
+        getSession().delete(usuario);
+
         return;
     }
 
     @SuppressWarnings("unchecked")
     public List<Usuario> getAll() {
-        return entityManager.createQuery("from Usuario").getResultList();
+        return getSession().createQuery("from Usuario").list();
     }
 
     public Usuario getByEmail(String email) {
-        return (Usuario) entityManager.createQuery(
+        return (Usuario) getSession().createQuery(
                 "from Usuario where email = :email")
                 .setParameter("email", email)
-                .getSingleResult();
+                .uniqueResult();
     }
 
     public Usuario getById(int id) {
-        return entityManager.find(Usuario.class, id);
+        return (Usuario) getSession().load(Usuario.class, id);
     }
 
     public void update(Usuario usuario) {
-        entityManager.merge(usuario);
+        getSession().update(usuario);
         return;
     }
-
-    // ------------------------
-    // PRIVATE FIELDS
-    // ------------------------
-
-    // An EntityManager will be automatically injected from entityManagerFactory
-    // setup on DatabaseConfig class.
-    @PersistenceContext
-    private EntityManager entityManager;
-
 } // class UserDao

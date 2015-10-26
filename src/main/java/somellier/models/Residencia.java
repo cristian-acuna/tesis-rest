@@ -9,8 +9,13 @@ public class Residencia {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     private String ciudad;
-    private int provincia;
+
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name="cod_provincia")
+    private Provincia provincia;
+
     private String pais;
 
     public Residencia() {
@@ -20,7 +25,7 @@ public class Residencia {
         this.id = id;
     }
 
-    public Residencia(String ciudad, int provincia, String pais) {
+    public Residencia(String ciudad, Provincia provincia, String pais) {
         this.ciudad = ciudad;
         this.provincia = provincia;
         this.pais = pais;
@@ -42,11 +47,11 @@ public class Residencia {
         this.ciudad = ciudad;
     }
 
-    public int getProvincia() {
+    public Provincia getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(int provincia) {
+    public void setProvincia(Provincia provincia) {
         this.provincia = provincia;
     }
 

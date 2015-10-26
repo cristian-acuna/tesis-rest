@@ -1,13 +1,38 @@
 #import.sql file
 
-insert into residencia (id, ciudad, pais, provincia) values ('1', 'Santa Rosa', 'Argentina', 1);
-insert into residencia (id, ciudad, pais, provincia) values ('2', 'San Luis', 'Argentina', 2);
-insert into residencia (id, ciudad, pais, provincia) values ('3', 'Carlos Paz', 'Argentina', 3);
-insert into residencia (id, ciudad, pais, provincia) values ('4', 'Cura Brochero', 'Argentina', 3);
-insert into bodega (id, anio, descripcion, link, nombre, cod_residencia) values ('1', '1900', 'La Bodega pampeana por excelencia',"link","Senheteizer", 1);
-insert into bodega (id, anio, descripcion, link, nombre, cod_residencia) values ('2', '1950', 'La Bodega pampeana por excelencia',"link","Rutini", 2);
-insert into bodega (id, anio, descripcion, link, nombre, cod_residencia) values ('3', '1978', 'La Bodega pampeana por excelencia',"link","La Gata Flora", 3);
-insert into bodega (id, anio, descripcion, link, nombre, cod_residencia) values ('4', '1920', 'La Bodega pampeana por excelencia',"link","Chandon", 2);
+insert into provincia (id, descripcion) values (1, 'Capital Federal');
+insert into provincia (id, descripcion) values (2, 'Buenos Aires');
+insert into provincia (id, descripcion) values (3, 'Catamarca');
+insert into provincia (id, descripcion) values (4, 'Chaco');
+insert into provincia (id, descripcion) values (5, 'Chubut');
+insert into provincia (id, descripcion) values (6, 'Cordoba');
+insert into provincia (id, descripcion) values (7, 'Corrientes');
+insert into provincia (id, descripcion) values (8, 'Entre Rios');
+insert into provincia (id, descripcion) values (9, 'Formosa');
+insert into provincia (id, descripcion) values (10, 'Jujuy');
+insert into provincia (id, descripcion) values (11, 'La Pampa');
+insert into provincia (id, descripcion) values (12, 'La Rioja');
+insert into provincia (id, descripcion) values (13, 'Mendoza');
+insert into provincia (id, descripcion) values (14, 'Misiones');
+insert into provincia (id, descripcion) values (15, 'Neuquen');
+insert into provincia (id, descripcion) values (16, 'Rio Negro');
+insert into provincia (id, descripcion) values (17, 'Salta');
+insert into provincia (id, descripcion) values (18, 'San Juan');
+insert into provincia (id, descripcion) values (19, 'Santa Cruz');
+insert into provincia (id, descripcion) values (20, 'Santa Fe');
+insert into provincia (id, descripcion) values (21, 'Santiago del Estero');
+insert into provincia (id, descripcion) values (22, 'Tierra del Fuego');
+insert into provincia (id, descripcion) values (23, 'Tucuman');
+insert into provincia (id, descripcion) values (24, 'San Luis');
+
+insert into residencia (id, ciudad, cod_provincia, pais) values ('1', 'Santa Rosa',1, 'Argentina');
+insert into residencia (id, ciudad, cod_provincia, pais) values ('2', 'San Luis',2, 'Argentina');
+insert into residencia (id, ciudad, cod_provincia, pais) values ('3', 'Carlos Paz',3, 'Argentina');
+insert into residencia (id, ciudad, cod_provincia, pais) values ('4', 'Cura Brochero',4, 'Argentina');
+insert into bodega (id, anio, descripcion, link, nombre, cod_residencia) values ('1', '1900', 'Bodega SEPTIMA, ubicada en la fantastica provincia de Mendoza, Argentina, con sus fincas en la zona de Agrelo, al pie de la Cordillera de los Andes, propone una amplia variedad de vinos y espumosos argentinos. Su arquitectura, el estilo de la construccion, los materiales empleados y la disposicion de los espacios hacen del lugar un referente indiscutido entre las bodegas mendocinas de la ultima etapa de la vitivinicultura argentina. La bodega ocupa un area de 5500 m2 y cuenta con una capacidad de 3.000.000 de botellas. La construccion se inspiro en el sistema constructivo ancestral de la pirca, tecnica muy utilizada por los huarpes para levantar muros, que consiste en apilar piedras naturales. Bodega Septima, con mas de 150 ha plantadas y con equilibrados niveles de produccion, ofrece una amplia gama de productos para el amante del buen vino y de los exquisitos espumosos.','http://www.bodegaseptima.com/home.php','Septima', 1);
+insert into bodega (id, anio, descripcion, link, nombre, cod_residencia) values ('2', '1950', 'La bodega, disenada para la produccion de vinos de alta gama, fue construida en 2004 en Perdriel, Lujan de Cuyo, al pie de la Cordillera de Los Andes. Es una fusion de modernidad y clasicismo: lineas rectas bien definidas con muros de inspiracion toscana entregan una estetica muy atractiva. Renacer cuenta con tecnologia italiana de vanguardia, una capacidad total de almacenamiento de 1.647.000 litros repartidos en 417.900 litros en tanques de acero inoxidable y 1.229.100 litros en piletas de concreto, seguimiento computarizado de temperaturas, trazabilidad de todos los procesos y equipos de ultima generacion. La bodega es tambien pionera en desarrollar viticultura de precision; plantas de alta densidad y poco rendimiento por planta, 8 toneladas por hectarea, produciendo asi uvas excepcionales que se convertiran en vinos unicos, magnificos.','http://www.bodegarenacer.com.ar/','Renacer', 2);
+insert into bodega (id, anio, descripcion, link, nombre, cod_residencia) values ('3', '1897', 'Lagarde conserva su bodega original construida en 1897. La misma es un fiel reflejo de la imagen que queremos transmitir a traves de nuestros vinos: el balance armonico entre el pasado y la innovacion. Alli, al mismo tiempo que preservamos nuestra cultura e identidad, tambien invertimos en tecnologia de ultima generacion para asegurar la mejor calidad en la elaboracion de cada uno de nuestros vinos.','http://www.lagarde.com.ar/','Lagarde', 3);
+insert into bodega (id, anio, descripcion, link, nombre, cod_residencia) values ('4', '1888', 'Fieles a la calidad de nuestros vinos y a la importancia de nuestro terroir, Nieto Senetiner cuenta con 400 hectareas de vinedos entre nuestras 3 Fincas, todas ubicadas en la zona de Lujan de Cuyo, pero en distintos valles con diferentes caracteristicas. En estas Fincas se produce uva de gran calidad dando lugar a vinos excepcionales. En nuestras bodegas damos continuidad al proceso que nace en el vinedo. Ponemos especial cuidado en el tratamiento de las uvas y trabajamos en la permanente mejora continua de los procesos, acompanada de tecnologia y de artesanalidad que nos permiten la elaboracion de nuestros grandes vinos optimizando la calidad.','http://www.nietosenetiner.com.ar/','Nieto Senetiner', 2);
 
 insert into tipo_vino (id, nombre, descripcion) values ('1', 'blanco', 'Es el obtenido a partir de uvas blancas. Aunque es poco frecuente, tambien puede ser obtenido a partir de uvas tintas de pulpa no coloreada a las que se les separa el hollejo (piel de la uva, parte externa, cubierta). Los vinos hechos de uvas blancas no son tan bien valorados por el publico general como son los provenientes de uvas rojas; valoraciun subjetiva que solo priva de grandes vinos a quienes la ejercen. Las personas piensan en los vinos blancos como caldos acidos y poco interesantes, pero estas mismas caracteristicas las podemos encontrar en los vinos tintos de baja calidad.');
 insert into tipo_vino (id, nombre, descripcion) values ('2', 'rosado', 'Es el obtenido a partir de uvas tintas a las que no se les ha separado los hollejos.');

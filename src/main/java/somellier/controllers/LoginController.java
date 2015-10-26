@@ -4,6 +4,7 @@ package somellier.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import somellier.models.Provincia;
 import somellier.models.Residencia;
 import somellier.models.Usuario;
 import somellier.models.UsuarioDao;
@@ -37,7 +38,8 @@ public class LoginController {
             @RequestParam(value="provincia") String provincia,
             @RequestParam(value="pais") String pais)
     {
-        Residencia residencia = new Residencia(ciudad,Integer.parseInt(provincia),pais);
+        Provincia prov = new Provincia(Integer.parseInt(provincia));
+        Residencia residencia = new Residencia(ciudad,prov,pais);
         Usuario usuario = new Usuario(nombre, apellido, email, password, residencia);
         System.out.println("REGISTROOOOO:"+usuario.toString());
         try {
