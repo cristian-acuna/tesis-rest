@@ -1,5 +1,8 @@
 package somellier.models;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -11,48 +14,39 @@ import java.util.List;
 @Transactional
 public class BodegaDao {
 
+    @Autowired
+    private SessionFactory _sessionFactory;
+
+    private Session getSession() {
+        return _sessionFactory.getCurrentSession();
+    }
+
     public void create(Bodega bodega) {
-        entityManager.persist(bodega);
-        return;
+        getSession().saveOrUpdate(bodega);
     }
 
     public void delete(Bodega bodega) {
-        if (entityManager.contains(bodega))
-            entityManager.remove(bodega);
-        else
-            entityManager.remove(entityManager.merge(bodega));
-        return;
+        getSession().delete(bodega);
     }
 
     @SuppressWarnings("unchecked")
     public List<Bodega> getAll() {
-        return entityManager.createQuery("from Bodega").getResultList();
+        return getSession().createQuery("from Bodega").list();
     }
 
     public Bodega getByNombre(String nombre) {
-        return (Bodega) entityManager.createQuery(
+        return (Bodega) getSession().createQuery(
                 "from Bodega where nombre = :nombre")
                 .setParameter("nombre", nombre)
-                .getSingleResult();
+                .uniqueResult();
     }
 
     public Bodega getById(int id) {
-        return entityManager.find(Bodega.class, id);
+        return (Bodega) getSession().load(Bodega.class, id);
     }
 
     public void update(Bodega bodega) {
-        entityManager.merge(bodega);
-        return;
+        getSession().merge(bodega);
     }
-
-    // ------------------------
-    // PRIVATE FIELDS
-    // ------------------------
-
-    // An EntityManager will be automatically injected from entityManagerFactory
-    // setup on DatabaseConfig class.
-    @PersistenceContext
-    private EntityManager entityManager;
-
 } // class BodegaDao
 

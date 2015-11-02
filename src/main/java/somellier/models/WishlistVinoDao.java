@@ -1,9 +1,9 @@
 package somellier.models;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -11,47 +11,43 @@ import java.util.List;
 @Transactional
 public class WishlistVinoDao {
 
-    public void create(WishlistVino wishlistVino) {
-        entityManager.persist(wishlistVino);
-        return;
+    @Autowired
+    private SessionFactory _sessionFactory;
+
+    private Session getSession() {
+        return _sessionFactory.getCurrentSession();
     }
 
-    public void delete(WishlistVino wishlistVino) {
-        if (entityManager.contains(wishlistVino))
-            entityManager.remove(wishlistVino);
-        else
-            entityManager.remove(entityManager.merge(wishlistVino));
-        return;
+    public void create(WishlistVino wishlistVino) {
+        getSession().saveOrUpdate(wishlistVino);
+    }
+
+    public void delete(WishlistVino wish) {
+        getSession().createQuery(
+                "delete from WishlistVino where usuario.id = :idUsuario and vino.id = :idVino")
+                .setParameter("idUsuario", wish.getUsuario().getId())
+                .setParameter("idVino", wish.getVino().getId())
+                .executeUpdate();
     }
 
     @SuppressWarnings("unchecked")
     public List<WishlistVino> getAll() {
-        return entityManager.createQuery("from WishlistVino").getResultList();
+        return getSession().createQuery("from WishlistVino").list();
     }
 
-    public WishlistVino getByUsuario(Usuario usuario) {
-        return (WishlistVino) entityManager.createQuery(
-                "from WishlistVino where usuario = :usuario")
-                .setParameter("usuario", usuario)
-                .getSingleResult();
+    @SuppressWarnings("unchecked")
+    public List<WishlistVino> getByUsuario(int id) {
+        return getSession().createQuery(
+                "from WishlistVino where usuario.id = :id order by fecha desc")
+                .setParameter("id", id)
+                .list();
     }
 
-    public WishlistVino getById(int id) {
-        return entityManager.find(WishlistVino.class, id);
+    public WishlistVino getById(WishlistVino wish) {
+        return (WishlistVino) getSession().get(WishlistVino.class, wish);
     }
 
     public void update(WishlistVino wishlistVino) {
-        entityManager.merge(wishlistVino);
-        return;
+        getSession().merge(wishlistVino);
     }
-
-    // ------------------------
-    // PRIVATE FIELDS
-    // ------------------------
-
-    // An EntityManager will be automatically injected from entityManagerFactory
-    // setup on DatabaseConfig class.
-    @PersistenceContext
-    private EntityManager entityManager;
-
-} // class WishlistVinoDao
+}

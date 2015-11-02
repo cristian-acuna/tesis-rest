@@ -1,9 +1,10 @@
 package somellier.models;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -11,48 +12,45 @@ import java.util.List;
 @Transactional
 public class ComentarioDao {
 
-    public void create(Comentario comentario) {
-        entityManager.persist(comentario);
-        return;
+    @Autowired
+    private SessionFactory _sessionFactory;
+
+    private Session getSession() {
+        return _sessionFactory.getCurrentSession();
     }
 
-    public void delete(Comentario comentario) {
-        if (entityManager.contains(comentario))
-            entityManager.remove(comentario);
-        else
-            entityManager.remove(entityManager.merge(comentario));
-        return;
+    public int create(Comentario comentario) {
+        Integer id = (Integer) getSession().save(comentario);
+
+        return id.intValue();
+    }
+
+    public void delete(int id) {
+        getSession().createQuery(
+                "delete from Comentario where id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @SuppressWarnings("unchecked")
     public List<Comentario> getAll() {
-        return entityManager.createQuery("from Comentario").getResultList();
+        return getSession().createQuery("from Comentario").list();
     }
 
-    public Comentario getByVino(Usuario vino) {
-        return (Comentario) entityManager.createQuery(
-                "from Comentario where vino.id = :id")
-                .setParameter("id", vino.getId())
-                .getSingleResult();
+    @SuppressWarnings("unchecked")
+    public List<Comentario> getByVino(int id) {
+        return getSession().createQuery(
+                "from Comentario where vino.id = :id order by fecha desc")
+                .setParameter("id", id)
+                .list();
     }
 
     public Comentario getById(int id) {
-        return entityManager.find(Comentario.class, id);
+        return (Comentario) getSession().get(Comentario.class, id);
     }
 
     public void update(Comentario comentario) {
-        entityManager.merge(comentario);
-        return;
+        getSession().merge(comentario);
     }
-
-    // ------------------------
-    // PRIVATE FIELDS
-    // ------------------------
-
-    // An EntityManager will be automatically injected from entityManagerFactory
-    // setup on DatabaseConfig class.
-    @PersistenceContext
-    private EntityManager entityManager;
-
-} // class ComentarioDao
+}
 

@@ -1,8 +1,11 @@
 package somellier.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "comentario")
@@ -13,16 +16,18 @@ public class Comentario {
     private int id;
 
     @NotNull
-    private Date fecha;
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm", timezone="America/Argentina/Buenos_Aires")
+    private Timestamp fecha = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
     @NotNull
+    @Column(length=1000)
     private String comentario;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="cod_usuario")
     private Usuario usuario;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="cod_vino")
     private Vino vino;
 
@@ -33,8 +38,7 @@ public class Comentario {
         this.id = id;
     }
 
-    public Comentario(Date fecha, String comentario, Usuario usuario, Vino vino) {
-        this.fecha = fecha;
+    public Comentario(String comentario, Usuario usuario, Vino vino) {
         this.comentario = comentario;
         this.usuario = usuario;
         this.vino = vino;
@@ -48,11 +52,11 @@ public class Comentario {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 

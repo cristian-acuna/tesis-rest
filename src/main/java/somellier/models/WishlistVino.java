@@ -1,41 +1,28 @@
 package somellier.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "wishlist_vino")
-public class WishlistVino {
+public class WishlistVino implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="cod_usuario")
     private Usuario usuario;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @Id
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="cod_vino")
     private Vino vino;
 
     public WishlistVino() {
     }
 
-    public WishlistVino(int id) {
-        this.id = id;
-    }
-
     public WishlistVino(Usuario usuario, Vino vino) {
         this.usuario = usuario;
         this.vino = vino;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Usuario getUsuario() {

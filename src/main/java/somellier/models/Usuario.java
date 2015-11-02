@@ -2,6 +2,8 @@ package somellier.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
@@ -26,6 +28,10 @@ public class Usuario {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="cod_residencia")
     private Residencia residencia;
+
+/*    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "usuario_vino", joinColumns = { @JoinColumn(name = "cod_usuario") }, inverseJoinColumns = { @JoinColumn(name = "cod_vino") })
+    private Set<Vino> wishlist = new HashSet<Vino>(0);*/
 
     @NotNull
     private EstadoUsuario estado = EstadoUsuario.ACTIVO;
@@ -99,4 +105,12 @@ public class Usuario {
     public void setEstado(EstadoUsuario estado) {
         this.estado = estado;
     }
+/*
+    public Set<Vino> getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(Set<Vino> wishlist) {
+        this.wishlist = wishlist;
+    }*/
 }

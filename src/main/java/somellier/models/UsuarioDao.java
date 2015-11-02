@@ -1,11 +1,7 @@
 package somellier.models;
 
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +20,10 @@ public class UsuarioDao {
 
     public void create(Usuario usuario) {
         getSession().saveOrUpdate(usuario);
-        return;
     }
 
     public void delete(Usuario usuario) {
         getSession().delete(usuario);
-
-        return;
     }
 
     @SuppressWarnings("unchecked")
@@ -51,6 +44,5 @@ public class UsuarioDao {
 
     public void update(Usuario usuario) {
         getSession().update(usuario);
-        return;
     }
-} // class UserDao
+}

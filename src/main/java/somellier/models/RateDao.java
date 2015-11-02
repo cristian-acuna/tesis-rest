@@ -21,13 +21,10 @@ public class RateDao {
 
     public void create(Rate rate) {
         getSession().saveOrUpdate(rate);
-        return;
     }
 
     public void delete(Rate rate) {
     getSession().delete(rate);
-
-        return;
     }
 
     @SuppressWarnings("unchecked")
@@ -48,7 +45,6 @@ public class RateDao {
 
     public void update(Rate rate) {
         getSession().merge(rate);
-        return;
     }
 } // class RateDao
 
