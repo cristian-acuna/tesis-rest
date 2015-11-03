@@ -43,7 +43,6 @@ public class VinoController {
     List<Vino> listar()
     {
         List<Vino> vinos = vinoDao.getAll();
-        System.out.println(vinos.toString());
 
         return vinos;
     }
@@ -52,8 +51,6 @@ public class VinoController {
     public @ResponseBody
     boolean registrar(@RequestBody Vino vino)
     {
-        System.out.println("REGISTROOOOO:");
-
         try {
             vinoDao.create(vino);
         }
@@ -74,7 +71,6 @@ public class VinoController {
             @RequestParam(value="uva") String uva,
             @RequestParam(value="tipo") String tipo)
     {
-        System.out.println("PARAMETROSSSSSSSSSSSSSSSSSSSSSS:"+queryText+bodega+edad+uva+tipo);
         List<Vino> vinos = vinoDao.getByCriteria(queryText, bodega, edad, uva, tipo);
 
         return vinos;
@@ -97,18 +93,6 @@ public class VinoController {
         }
 
         return true;
-/*        try {
-        Usuario usuario = usuarioDao.getById(wish.getUsuario().getId());
-            System.out.println("USUARIO:::::::::::::::::"+wish.getUsuario().getId()+"VINO::::::::"+wish.getVino().getId());
-        usuario.getWishlist().add(wish.getVino());
-            System.out.println("USUARIO TRAIDO:::::::::::::::::" + usuario.getNombre());
-        //usuarioDao.update(usuario);
-    }
-    catch (Exception ex) {
-        System.out.println(ex);
-        return false;
-    }
-        return true;*/
     }
 
     @RequestMapping(value = "/rate", method = RequestMethod.POST)
@@ -169,12 +153,23 @@ public class VinoController {
         return comentarioDao.getByVino(id);
     }
 
+    @RequestMapping(value = "/precio", method = RequestMethod.GET)
+    public @ResponseBody
+    float getCostoPromedio(@RequestParam(value="id") int id)
+    {
+        List<Precio> precios = precioDao.getByVino(id);
+        float sumatoria = 0;
+
+        for (Precio precio : precios) {
+            sumatoria += precio.getPrecio();
+        }
+        return sumatoria/precios.size() >= 0 ? sumatoria/precios.size() : 0;
+    }
+
     @RequestMapping(value = "/valorar", method = RequestMethod.POST)
     public @ResponseBody
     boolean valorar(@RequestBody Precio precio)
     {
-        System.out.println("VALORADOOOOOOOOOOOOOO!!!!!:");
-
         try {
             precioDao.create(precio);
         }
@@ -185,7 +180,6 @@ public class VinoController {
 
         return true;
     }
-
 
     @RequestMapping(value = "/edades", method = RequestMethod.GET)
     public @ResponseBody

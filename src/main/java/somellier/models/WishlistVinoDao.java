@@ -36,9 +36,9 @@ public class WishlistVinoDao {
     }
 
     @SuppressWarnings("unchecked")
-    public List<WishlistVino> getByUsuario(int id) {
+    public List<Vino> getByUsuario(int id) {
         return getSession().createQuery(
-                "from WishlistVino where usuario.id = :id order by fecha desc")
+                "select w.vino from WishlistVino w where w.usuario.id = :id order by w.fecha desc")
                 .setParameter("id", id)
                 .list();
     }
