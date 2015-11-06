@@ -12,48 +12,25 @@ import java.util.List;
 public class WishlistController {
 
     @Autowired
-    private VinoDao vinoDao;
-
-    @Autowired
-    private RateDao rateDao;
-
-    @Autowired
     private WishlistVinoDao wishlistDao;
-
-    @Autowired
-    private PrecioDao precioDao;
-
-    @Autowired
-    private UsuarioDao usuarioDao;
-
 
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public @ResponseBody
     List<Vino> listar(@RequestParam(value="id") int idUsuario)
     {
-        List<Vino> vinos = wishlistDao.getByUsuario(idUsuario);
-
-        return vinos;
+        return wishlistDao.getByUsuario(idUsuario);
     }
 
-/*    @RequestMapping(value = "/registrar", method = RequestMethod.POST)
+    @RequestMapping(value = "/iswish", method = RequestMethod.POST)
     public @ResponseBody
-    boolean registrar(@RequestBody Vino vino)
+    boolean isWish(@RequestBody WishlistVino wish)
     {
-        try {
-            vinoDao.create(vino);
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
-            return false;
-        }
-
-        return true;
+        return wishlistDao.getById(wish) != null;
     }
 
     @RequestMapping(value = "/wish", method = RequestMethod.POST)
     public @ResponseBody
-    boolean wish(@RequestBody WishlistVino wish)
+    List<Vino> wish(@RequestBody WishlistVino wish)
     {
         try {
             if (wishlistDao.getById(wish)==null) {
@@ -64,10 +41,10 @@ public class WishlistController {
         }
         catch (Exception ex) {
             System.out.println(ex);
-            return false;
+            return null;
         }
 
-        return true;
-    }*/
+        return listar(wish.getUsuario().getId());
+    }
 }
 

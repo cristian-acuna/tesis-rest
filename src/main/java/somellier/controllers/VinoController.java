@@ -49,17 +49,19 @@ public class VinoController {
 
     @RequestMapping(value = "/registrar", method = RequestMethod.POST)
     public @ResponseBody
-    boolean registrar(@RequestBody Vino vino)
+    Vino registrar(@RequestBody Vino vino)
     {
         try {
+            System.out.println("LLEGA A REGISTRAR!!!!!!!!!!!!!!!!");
             vinoDao.create(vino);
+            System.out.println(vino.getImagen());
         }
         catch (Exception ex) {
             System.out.println(ex);
-            return false;
+            return null;
         }
 
-        return true;
+        return vino;
     }
 
     @RequestMapping(value = "/filtrar", method = RequestMethod.GET)
@@ -76,30 +78,10 @@ public class VinoController {
         return vinos;
     }
 
-    @RequestMapping(value = "/wish", method = RequestMethod.POST)
-    public @ResponseBody
-    boolean wish(@RequestBody WishlistVino wish)
-    {
-        try {
-            if (wishlistDao.getById(wish)==null) {
-                wishlistDao.create(wish);
-            } else {
-                wishlistDao.delete(wish);
-            }
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
-            return false;
-        }
-
-        return true;
-    }
-
     @RequestMapping(value = "/rate", method = RequestMethod.POST)
          public @ResponseBody
          boolean rate(@RequestBody Rate rate)
     {
-        System.out.println("RATEEEEEEEDDDDDDD!!!!!:");
         try {
             rateDao.create(rate);
         }
@@ -155,7 +137,7 @@ public class VinoController {
 
     @RequestMapping(value = "/precio", method = RequestMethod.GET)
     public @ResponseBody
-    float getCostoPromedio(@RequestParam(value="id") int id)
+    String getCostoPromedio(@RequestParam(value="id") int id)
     {
         List<Precio> precios = precioDao.getByVino(id);
         float sumatoria = 0;
@@ -163,7 +145,9 @@ public class VinoController {
         for (Precio precio : precios) {
             sumatoria += precio.getPrecio();
         }
-        return sumatoria/precios.size() >= 0 ? sumatoria/precios.size() : 0;
+        float promedio = sumatoria/precios.size();
+
+        return promedio >= 0 ? String.format("%.2f", promedio) : "0";
     }
 
     @RequestMapping(value = "/valorar", method = RequestMethod.POST)

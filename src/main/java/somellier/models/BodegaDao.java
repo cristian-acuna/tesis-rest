@@ -22,7 +22,11 @@ public class BodegaDao {
     }
 
     public void create(Bodega bodega) {
-        getSession().saveOrUpdate(bodega);
+        int idBodega = (int) getSession().save(bodega);
+        System.out.println("DEVUELVE:"+idBodega);
+/*
+        return (Bodega) getSession().load(Bodega.class, idBodega);
+*/
     }
 
     public void delete(Bodega bodega) {

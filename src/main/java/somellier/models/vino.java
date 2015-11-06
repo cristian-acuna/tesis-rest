@@ -2,6 +2,7 @@ package somellier.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +23,10 @@ public class Vino {
     private String cosecha;
 
     private float graduacion;
+
+    @Lob
+    @Column(nullable = true)
+    private byte[] imagen;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="cod_bodega")
@@ -127,5 +132,13 @@ public class Vino {
 
     public void setTipoVino(TipoVino tipoVino) {
         this.tipoVino = tipoVino;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
 }
