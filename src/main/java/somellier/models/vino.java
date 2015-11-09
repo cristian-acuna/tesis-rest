@@ -29,6 +29,10 @@ public class Vino {
     private byte[] imagen;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name="cod_usuario")
+    private Usuario usuario;
+
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="cod_bodega")
     private Bodega bodega;
 
@@ -51,11 +55,12 @@ public class Vino {
         this.id = id;
     }
 
-    public Vino(String nombre, String descripcion, String cosecha, float graduacion, Bodega bodega, Uva uva, TipoVino tipoVino, Edad edad) {
+    public Vino(String nombre, String descripcion, String cosecha, float graduacion, Usuario usuario, Bodega bodega, Uva uva, TipoVino tipoVino, Edad edad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cosecha = cosecha;
         this.graduacion = graduacion;
+        this.usuario = usuario;
         this.bodega = bodega;
         this.uva = uva;
         this.tipoVino = tipoVino;
@@ -140,5 +145,13 @@ public class Vino {
 
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

@@ -150,6 +150,21 @@ public class VinoController {
         return promedio >= 0 ? String.format("%.2f", promedio) : "0";
     }
 
+    @RequestMapping(value = "/rating", method = RequestMethod.GET)
+    public @ResponseBody
+    float getRatingPromedio(@RequestParam(value="id") int id)
+    {
+        List<Rate> rates = rateDao.getByVino(id);
+        float sumatoria = 0;
+
+        for (Rate rate : rates) {
+            sumatoria += rate.getRate();
+        }
+        float promedio = sumatoria/rates.size();
+
+        return promedio >= 0 ? promedio : 0;
+    }
+
     @RequestMapping(value = "/valorar", method = RequestMethod.POST)
     public @ResponseBody
     boolean valorar(@RequestBody Precio precio)

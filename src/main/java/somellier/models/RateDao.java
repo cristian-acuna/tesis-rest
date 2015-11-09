@@ -32,11 +32,12 @@ public class RateDao {
         return getSession().createQuery("from Rate").list();
     }
 
-    public Rate getByVino(Usuario vino) {
-        return (Rate) getSession().createQuery(
+    @SuppressWarnings("unchecked")
+    public List<Rate> getByVino(int id) {
+        return getSession().createQuery(
                 "from Rate where vino.id = :id")
-                .setParameter("id", vino.getId())
-                .uniqueResult();
+                .setParameter("id", id)
+                .list();
     }
 
     public Rate getById(int id) {

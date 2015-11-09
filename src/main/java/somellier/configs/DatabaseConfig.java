@@ -40,6 +40,9 @@ public class DatabaseConfig {
   @Value("${entitymanager.packagesToScan}")
   private String ENTITYMANAGER_PACKAGES_TO_SCAN;
 
+  @Value("${spring.datasource.sqlScriptEncoding}")
+  private String SPRING_DATASOURCE_SCRIPTING_CODE;
+
   @Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
