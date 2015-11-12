@@ -1,9 +1,9 @@
 package somellier.models;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -11,48 +11,39 @@ import java.util.List;
 @Transactional
 public class UvaDao {
 
+    @Autowired
+    private SessionFactory _sessionFactory;
+
+    private Session getSession() {
+        return _sessionFactory.getCurrentSession();
+    }
+
     public void create(Uva uva) {
-        entityManager.persist(uva);
-        return;
+        getSession().saveOrUpdate(uva);
     }
 
     public void delete(Uva uva) {
-        if (entityManager.contains(uva))
-            entityManager.remove(uva);
-        else
-            entityManager.remove(entityManager.merge(uva));
-        return;
+        getSession().delete(uva);
     }
 
     @SuppressWarnings("unchecked")
     public List<Uva> getAll() {
-        return entityManager.createQuery("from Uva").getResultList();
+        return getSession().createQuery("from Uva").list();
     }
 
     public Uva getByNombre(String nombre) {
-        return (Uva) entityManager.createQuery(
+        return (Uva) getSession().createQuery(
                 "from Uva where nombre = :nombre")
                 .setParameter("nombre", nombre)
-                .getSingleResult();
+                .uniqueResult();
     }
 
     public Uva getById(int id) {
-        return entityManager.find(Uva.class, id);
+        return (Uva) getSession().load(Uva.class, id);
     }
 
     public void update(Uva uva) {
-        entityManager.merge(uva);
-        return;
+        getSession().merge(uva);
     }
-
-    // ------------------------
-    // PRIVATE FIELDS
-    // ------------------------
-
-    // An EntityManager will be automatically injected from entityManagerFactory
-    // setup on DatabaseConfig class.
-    @PersistenceContext
-    private EntityManager entityManager;
-
-} // class UvaDao
+}
 

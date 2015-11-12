@@ -52,9 +52,7 @@ public class VinoController {
     Vino registrar(@RequestBody Vino vino)
     {
         try {
-            System.out.println("LLEGA A REGISTRAR!!!!!!!!!!!!!!!!");
             vinoDao.create(vino);
-            System.out.println(vino.getImagen());
         }
         catch (Exception ex) {
             System.out.println(ex);
@@ -83,7 +81,13 @@ public class VinoController {
          boolean rate(@RequestBody Rate rate)
     {
         try {
-            rateDao.create(rate);
+            Rate savedRate = rateDao.getByVinoAndUsuario(rate);
+            if (savedRate==null) {
+                rateDao.create(rate);
+            } else {
+                savedRate.setRate(rate.getRate());
+                rateDao.create(savedRate);
+            }
         }
         catch (Exception ex) {
             System.out.println(ex);
@@ -208,6 +212,15 @@ public class VinoController {
         System.out.println("TIPOS OBTENIDOS!!!!!!!!!!!!!!!!:");
 
         return tipos;
+    }
+
+    @RequestMapping(value = "/toplist", method = RequestMethod.GET)
+    public @ResponseBody
+    List<Object[]> listarTop()
+    {
+        List<Object[]> vinos = vinoDao.getTopList();
+
+        return vinos;
     }
 }
 

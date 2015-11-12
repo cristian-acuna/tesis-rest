@@ -1,9 +1,9 @@
 package somellier.models;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -11,47 +11,38 @@ import java.util.List;
 @Transactional
 public class TipoVinoDao {
 
+    @Autowired
+    private SessionFactory _sessionFactory;
+
+    private Session getSession() {
+        return _sessionFactory.getCurrentSession();
+    }
+
     public void create(TipoVino tipoVino) {
-        entityManager.persist(tipoVino);
-        return;
+        getSession().saveOrUpdate(tipoVino);
     }
 
     public void delete(TipoVino tipoVino) {
-        if (entityManager.contains(tipoVino))
-            entityManager.remove(tipoVino);
-        else
-            entityManager.remove(entityManager.merge(tipoVino));
-        return;
+        getSession().delete(tipoVino);
     }
 
     @SuppressWarnings("unchecked")
     public List<TipoVino> getAll() {
-        return entityManager.createQuery("from TipoVino").getResultList();
+        return getSession().createQuery("from TipoVino").list();
     }
 
     public TipoVino getByNombre(String nombre) {
-        return (TipoVino) entityManager.createQuery(
+        return (TipoVino) getSession().createQuery(
                 "from TipoVino where nombre = :nombre")
                 .setParameter("nombre", nombre)
-                .getSingleResult();
+                .uniqueResult();
     }
 
     public TipoVino getById(int id) {
-        return entityManager.find(TipoVino.class, id);
+        return (TipoVino) getSession().load(TipoVino.class, id);
     }
 
     public void update(TipoVino tipoVino) {
-        entityManager.merge(tipoVino);
-        return;
+        getSession().merge(tipoVino);
     }
-
-    // ------------------------
-    // PRIVATE FIELDS
-    // ------------------------
-
-    // An EntityManager will be automatically injected from entityManagerFactory
-    // setup on DatabaseConfig class.
-    @PersistenceContext
-    private EntityManager entityManager;
-
-} // class TipoVinoDao
+}

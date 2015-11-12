@@ -20,7 +20,9 @@ public class RateDao {
     }
 
     public void create(Rate rate) {
-        getSession().saveOrUpdate(rate);
+        Vino vino = (Vino) getSession().load(Vino.class, rate.getVino().getId());
+        vino.getRates().add(rate);
+        getSession().saveOrUpdate(vino);
     }
 
     public void delete(Rate rate) {
@@ -40,8 +42,16 @@ public class RateDao {
                 .list();
     }
 
-    public Rate getById(int id) {
+    @SuppressWarnings("unchecked")
+    public Rate getByVinoAndUsuario(Rate rate) {
+        return (Rate) getSession().createQuery(
+                "from Rate where vino.id = :idVino AND usuario.id = :idUsuario")
+                .setParameter("idVino", rate.getVino().getId())
+                .setParameter("idUsuario", rate.getUsuario().getId())
+                .uniqueResult();
+/*
         return (Rate) getSession().load(Rate.class, id);
+*/
     }
 
     public void update(Rate rate) {

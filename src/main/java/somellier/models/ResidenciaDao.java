@@ -1,58 +1,48 @@
 package somellier.models;
 
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
 public class ResidenciaDao {
 
+    @Autowired
+    private SessionFactory _sessionFactory;
+
+    private Session getSession() {
+        return _sessionFactory.getCurrentSession();
+    }
+
     public void create(Residencia residencia) {
-        entityManager.persist(residencia);
-        return;
+        getSession().saveOrUpdate(residencia);
     }
 
     public void delete(Residencia residencia) {
-        if (entityManager.contains(residencia))
-            entityManager.remove(residencia);
-        else
-            entityManager.remove(entityManager.merge(residencia));
-        return;
+        getSession().delete(residencia);
     }
 
     @SuppressWarnings("unchecked")
     public List<Residencia> getAll() {
-        return entityManager.createQuery("from Residencia").getResultList();
+        return getSession().createQuery("from Residencia").list();
     }
 
     public Residencia getByCiudad(String ciudad) {
-        return (Residencia) entityManager.createQuery(
+        return (Residencia) getSession().createQuery(
                 "from Residencia where ciudad = :ciudad")
                 .setParameter("ciudad", ciudad)
-                .getSingleResult();
+                .uniqueResult();
     }
 
     public Residencia getById(int id) {
-        return entityManager.find(Residencia.class, id);
+        return (Residencia) getSession().load(Residencia.class, id);
     }
 
     public void update(Residencia residencia) {
-        entityManager.merge(residencia);
-        return;
+        getSession().merge(residencia);
     }
-
-    // ------------------------
-    // PRIVATE FIELDS
-    // ------------------------
-
-    // An EntityManager will be automatically injected from entityManagerFactory
-    // setup on DatabaseConfig class.
-    @PersistenceContext
-    private EntityManager entityManager;
-
-} // class ResidenciaDao
+}

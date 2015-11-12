@@ -85,4 +85,13 @@ insert into comentario (id, comentario, fecha, cod_usuario, cod_vino) values ('4
 insert into comentario (id, comentario, fecha, cod_usuario, cod_vino) values ('5', 'Una excelente convinacion de el tradicional vino andaluz con nuestros viñedos norteños', '2015-06-11 14:30:22.50',4,2);
 insert into comentario (id, comentario, fecha, cod_usuario, cod_vino) values ('6', 'El mejor Rosado que eh probado, muy recomendado aunque no es facil de conseguir en corrientes.', '2015-04-12 14:30:22.50',1,1);
 
+insert into rate (fecha, rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',5,1,2);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',2.5,2,2);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',3,3,2);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',3,1,1);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',4,2,1);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',4.5,1,3);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',5,2,3);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',5,3,3);
+
 

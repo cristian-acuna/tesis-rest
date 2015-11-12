@@ -1,59 +1,52 @@
 package somellier.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "rate")
 public class Rate implements Serializable{
 
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @NotNull
-    private long fecha = System.currentTimeMillis();
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm", timezone="America/Argentina/Buenos_Aires")
+    private Timestamp fecha = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
 
     @NotNull
     private float rate;
 
-    @Id
     @OneToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="cod_usuario")
     private Usuario usuario;
 
-    @Id
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="cod_vino")
+    @JsonBackReference
     private Vino vino;
 
-    public Rate() {
-    }
-
-    public Rate(int id) {
-        this.id = id;
-    }
+    public Rate() {}
 
     public Rate(float rate, Usuario usuario, Vino vino) {
-        this.fecha = System.currentTimeMillis();
         this.rate = rate;
         this.usuario = usuario;
         this.vino = vino;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public long getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(long fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 
@@ -79,5 +72,17 @@ public class Rate implements Serializable{
 
     public void setVino(Vino vino) {
         this.vino = vino;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
     }
 }

@@ -26,19 +26,8 @@ public class BodegaController {
 
     @RequestMapping(value = "/registrar", method = RequestMethod.POST)
     public @ResponseBody
-    Bodega registrar(@RequestBody Bodega bodega
-           /* @RequestParam(value="nombre") String nombre,
-            @RequestParam(value="descripcion") String descripcion,
-            @RequestParam(value="anio") String anio,
-            @RequestParam(value="link") String link,
-            @RequestParam(value="ciudad") String ciudad,
-            @RequestParam(value="provincia") String provincia,
-            @RequestParam(value="pais") String pais*/
-    )
+    Bodega registrar(@RequestBody Bodega bodega)
     {
-/*        Provincia prov = new Provincia(Integer.parseInt(provincia));
-        Residencia residencia = new Residencia(ciudad,prov,pais);
-        Bodega bodega = new Bodega(nombre, descripcion, Integer.parseInt(anio), link, residencia);*/
         try {
             bodegaDao.create(bodega);
             return bodega;

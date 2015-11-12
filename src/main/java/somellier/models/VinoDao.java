@@ -68,6 +68,13 @@ public class VinoDao {
                 .uniqueResult();
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Object[]> getTopList() {
+        return getSession().createQuery(
+                "select v, avg(r.rate) from Vino v inner join v.rates r group by v order by avg(r.rate) desc")
+                .list();
+    }
+
     public Vino getById(int id) {
         return (Vino) getSession().load(Vino.class, id);
     }

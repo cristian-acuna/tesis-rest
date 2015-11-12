@@ -1,5 +1,10 @@
 package somellier.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Base64;
@@ -47,6 +52,11 @@ public class Vino {
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="cod_edad")
     private Edad edad;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy="vino", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private Set<Rate> rates;
 
     public Vino() {
     }
@@ -153,5 +163,13 @@ public class Vino {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Set<Rate> getRates() {
+        return rates;
+    }
+
+    public void setRates(Set<Rate> rates) {
+        this.rates = rates;
     }
 }

@@ -29,10 +29,6 @@ public class Usuario {
     @JoinColumn(name="cod_residencia")
     private Residencia residencia;
 
-/*    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "usuario_vino", joinColumns = { @JoinColumn(name = "cod_usuario") }, inverseJoinColumns = { @JoinColumn(name = "cod_vino") })
-    private Set<Vino> wishlist = new HashSet<Vino>(0);*/
-
     @NotNull
     private EstadoUsuario estado = EstadoUsuario.ACTIVO;
 
