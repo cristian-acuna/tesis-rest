@@ -20,9 +20,10 @@ public class RateDao {
     }
 
     public void create(Rate rate) {
-        Vino vino = (Vino) getSession().load(Vino.class, rate.getVino().getId());
+/*        Vino vino = (Vino) getSession().get(Vino.class, rate.getVino().getId());
         vino.getRates().add(rate);
-        getSession().saveOrUpdate(vino);
+        getSession().merge(vino);*/
+        getSession().saveOrUpdate(rate);
     }
 
     public void delete(Rate rate) {
@@ -49,13 +50,12 @@ public class RateDao {
                 .setParameter("idVino", rate.getVino().getId())
                 .setParameter("idUsuario", rate.getUsuario().getId())
                 .uniqueResult();
-/*
-        return (Rate) getSession().load(Rate.class, id);
-*/
     }
 
     public void update(Rate rate) {
+        Vino vino = (Vino) getSession().get(Vino.class, rate.getVino().getId());
+        vino.getRates().add(rate);
         getSession().merge(rate);
     }
-} // class RateDao
+}
 

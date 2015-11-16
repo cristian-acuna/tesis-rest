@@ -92,6 +92,12 @@ insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:2
 insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',4,2,1);
 insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',4.5,1,3);
 insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',5,2,3);
-insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',5,3,3);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',2.5,3,3);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',2,3,7);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',3,3,8);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',5,3,11);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',0.5,3,12);
+insert into rate (fecha,rate, cod_usuario, cod_vino) values ('2015-09-22 14:30:22.50',1.5,3,5);
+
 
 

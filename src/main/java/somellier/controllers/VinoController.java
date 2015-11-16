@@ -86,7 +86,7 @@ public class VinoController {
                 rateDao.create(rate);
             } else {
                 savedRate.setRate(rate.getRate());
-                rateDao.create(savedRate);
+                rateDao.update(savedRate);
             }
         }
         catch (Exception ex) {

@@ -29,7 +29,7 @@ public class Rate implements Serializable{
     @JoinColumn(name="cod_usuario")
     private Usuario usuario;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="cod_vino")
     @JsonBackReference
     private Vino vino;
